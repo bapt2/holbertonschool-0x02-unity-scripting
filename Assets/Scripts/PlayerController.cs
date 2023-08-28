@@ -5,15 +5,30 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    int score = 0;
+    Rigidbody rb;
 
-    // Update is called once per frame
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     void FixedUpdate()
     {
         float horizontaleInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(horizontaleInput, 0, verticalInput) * speed * Time.fixedDeltaTime;
-        transform.Translate(movement);
-        
+        rb.velocity = new Vector3(horizontaleInput, 0, verticalInput) * speed * Time.fixedDeltaTime;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Pickup"))
+        {
+            score += 1;
+            Destroy(other.gameObject);
+        }
+        Debug.Log("Score: " + score);
+    }
+
 }
