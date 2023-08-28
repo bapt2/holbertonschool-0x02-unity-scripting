@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     int score = 0;
+    public int health = 5;
+
     Rigidbody rb;
 
     void Start()
@@ -26,9 +28,14 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Pickup"))
         {
             score += 1;
+            Debug.Log("Score: " + score);
             Destroy(other.gameObject);
         }
-        Debug.Log("Score: " + score);
+        if (other.CompareTag("Trap"))
+        {
+            health -= 1;
+            Debug.Log("Health: " + health);
+        }
     }
 
 }
